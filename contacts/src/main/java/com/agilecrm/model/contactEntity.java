@@ -1,8 +1,10 @@
-package Domain;
+package com.agilecrm.model;
 
-public class ContactDomain {
+import java.util.Date;
 
-	private String id;
+public class contactEntity extends BaseClass {
+
+	private int id;
 
 	private String firstName;
 
@@ -10,11 +12,21 @@ public class ContactDomain {
 
 	private String email;
 
-	public String getId() {
+	private Date dob;
+
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -44,16 +56,8 @@ public class ContactDomain {
 
 	@Override
 	public String toString() {
-		return "ContactDomain [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ "]";
-	}
-
-	public ContactDomain(String id, String firstName, String lastName, String email) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
+		return "contactDto [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", dob=" + dob + "]";
 	}
 
 }
