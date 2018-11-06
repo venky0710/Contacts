@@ -14,7 +14,7 @@ import com.agilecrm.utility.ConnectionDao;
 public class ContactDaoImpl implements ContactDao {
 
 	@Override
-	public int addContact(contactEntity contact) {
+	public int addContactDao(contactEntity contact) {
 		int status = 0;
 		try {
 			Connection connection = ConnectionDao.getConnection();
@@ -39,11 +39,11 @@ public class ContactDaoImpl implements ContactDao {
 	}
 
 	@Override
-	public contactEntity getContact(int id) {
+	public contactEntity getContactDao(int id) {
 		contactEntity contact = new contactEntity();
 		try {
 			Connection con = ConnectionDao.getConnection();
-			PreparedStatement ps = con.prepareStatement("select * from contacts where id=?and isActive=1");
+			PreparedStatement ps = con.prepareStatement("select * from contacts where id=?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -68,7 +68,7 @@ public class ContactDaoImpl implements ContactDao {
 	}
 
 	@Override
-	public int deleteContact(int id) throws ClassNotFoundException, SQLException {
+	public int deleteContactDao(int id) throws ClassNotFoundException, SQLException {
 		int status = 0;
 		contactEntity contact = new contactEntity();
 		Connection con = ConnectionDao.getConnection();
@@ -105,7 +105,7 @@ public class ContactDaoImpl implements ContactDao {
 	}
 
 	@Override
-	public int updateContact(contactEntity contact) {
+	public int updateContactDao(contactEntity contact) {
 		int status = 0;
 		try {
 			Connection con = ConnectionDao.getConnection();
@@ -127,11 +127,11 @@ public class ContactDaoImpl implements ContactDao {
 	}
 
 	@Override
-	public List<contactEntity> getAll() {
+	public List<contactEntity> getAllDao() {
 		List<contactEntity> list = new ArrayList<contactEntity>();
 		try {
 			Connection con = ConnectionDao.getConnection();
-			PreparedStatement ps = con.prepareStatement("select * from contacts where isActive=1");
+			PreparedStatement ps = con.prepareStatement("select * from contacts where id=? isActive=1");
 
 			ResultSet resultSet = ps.executeQuery();
 			while (resultSet.next()) {

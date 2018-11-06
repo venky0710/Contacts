@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.agilecrm.model.contactEntity;
 import com.agilecrm.service.ContactService;
 import com.agilecrm.service.ContactServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -42,8 +45,50 @@ public class ContactServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
+		String method = request.getParameter("action");
+		int id= Integer.parseInt(request.getParameter("id"));
+		
+		if(method.equals("save"))
+			out.write((ContactServlet.saveData(request,response)));
+		else if(method.equals("getAll"))
+			out.write(ContactServlet.getAll(request,response)+"");
+		else if(method.equals("getById"))
+			ContactServlet.getById(request,response);
+		
+	}
+
+	private static void getById(HttpServletRequest request, HttpServletResponse response) {
+		
+		ContactService service = new ContactServiceImpl();
+		
+		contactEntity entity = service.fetchContactService(Integer.parseInt(request.getParameter("id")));
+		ObjectMapper mapper = new ObjectMapper();
+	
+
+		//Object to JSON in file
+		try {
+			mapper.writeValueAsString(entity);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		//Object to JSON in String
+		try {
+			String jsonInString = mapper.writeValueAsString(entity);
+			System.out.println(jsonInString);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+			
+	}
+
+	protected static String saveData(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		response.setContentType("application/json");
 
 		ContactService service = new ContactServiceImpl();
 
@@ -65,36 +110,28 @@ public class ContactServlet extends HttpServlet {
 		contact.setDob(dob);
 		contact.setCreatedDate(new Date());
 
-		int status = service.saveContact(contact);
+		int status = service.saveContactService(contact);
 		if (status > 0) {
-			out.print("Record saved successfully!");
+			return "Record saved successfully!";
 			//request.getRequestDispatcher("index.html").include(request, response);
 		} else {
-			out.println("Sorry! unable to save record");
+			return "Sorry! unable to save record";
 		}
 
-		out.close();
 	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected static Object getAll(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		//String id = request.getParameter("id")
 		//int id = Integer.parseInt(request.getParameter("id"));
 		ContactService service = new ContactServiceImpl();
 
-		try {
-			//int id = Integer.parseInt(request.getParameter("id"));
-			service.removeContact(10);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			List<contactEntity> list = service.getAllService();
 		PrintWriter out = response.getWriter();
-		out.println("Sorry! unable to update record");
+		if(list.isEmpty())
+			return ("Sorry! unable to update record");
+		else
+			return list;
 		//response.sendRedirect("ViewServlet");
 	}
 
@@ -125,7 +162,7 @@ public class ContactServlet extends HttpServlet {
 		contact.setId(id);
 		contact.setDob(dob);
 
-		int status = service.updateContact(contact);
+		int status = service.updateContactService(contact);
 		if (status > 0) {
 			out.print("<p>Record Updated successfully!</p>");
 		} else {
@@ -143,7 +180,7 @@ public class ContactServlet extends HttpServlet {
 		ContactService service = new ContactServiceImpl();
 
 		try {
-			service.removeContact(id);
+			service.removeContactService(id);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,17 +1,20 @@
 package com.agilecrm.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.agilecrm.model.contactEntity;
 
 public interface ContactService {
 
-	public int saveContact(contactEntity contact);
+	public int saveContactService(contactEntity contact);
 
-	public contactEntity fetchContact(int id);
+	public contactEntity fetchContactService(int id);
 
-	public int removeContact(int id) throws ClassNotFoundException, SQLException;
+	public int removeContactService(int id) throws ClassNotFoundException, SQLException;
 
-	public int updateContact(contactEntity contact);
+	public int updateContactService(contactEntity contact);
+	
+	public List<contactEntity> getAllService();
 
 }

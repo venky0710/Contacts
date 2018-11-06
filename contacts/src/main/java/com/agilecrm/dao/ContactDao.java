@@ -7,13 +7,13 @@ import com.agilecrm.model.contactEntity;
 
 public interface ContactDao {
 
-	public int addContact(contactEntity contact);
+	public int addContactDao(contactEntity contact);
 
-	public contactEntity getContact(int id);
+	public contactEntity getContactDao(int id);
 
-	public int deleteContact(int id) throws ClassNotFoundException, SQLException;
+	public int deleteContactDao(int id) throws ClassNotFoundException, SQLException;
 
-	public int updateContact(contactEntity contact);
+	public int updateContactDao(contactEntity contact);
 	
-	public List<contactEntity> getAll();
+	public List<contactEntity> getAllDao();
 }

@@ -10,7 +10,7 @@ public class ConnectionDao {
 		 Class.forName("com.mysql.jdbc.Driver");  
          return DriverManager.getConnection("jdbc:mysql://localhost:3306/training","root","root123");  
 	}  
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	/*public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		System.out.println(ConnectionDao.getConnection().getClass().getName()+"-----------"+"done");
-	}
+	}*/
 }

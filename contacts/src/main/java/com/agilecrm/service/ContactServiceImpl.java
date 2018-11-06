@@ -1,6 +1,7 @@
 package com.agilecrm.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.agilecrm.dao.ContactDao;
 import com.agilecrm.dao.ContactDaoImpl;
@@ -12,23 +13,29 @@ public class ContactServiceImpl implements ContactService {
 	ContactDao dao = new ContactDaoImpl();
 
 	@Override
-	public int saveContact(contactEntity contact) {
-		return dao.addContact(contact);
+	public int saveContactService(contactEntity contact) {
+		return dao.addContactDao(contact);
 	}
 
 	@Override
-	public contactEntity fetchContact(int id) {
-		return dao.getContact(id);
+	public contactEntity fetchContactService(int id) {
+		return dao.getContactDao(id);
 	}
 
 	@Override
-	public int removeContact(int id) throws ClassNotFoundException, SQLException {
-		return dao.deleteContact(id);
+	public int removeContactService(int id) throws ClassNotFoundException, SQLException {
+		return dao.deleteContactDao(id);
 	}
 
 	@Override
-	public int updateContact(contactEntity contact) {
-		return dao.updateContact(contact);
+	public int updateContactService(contactEntity contact) {
+		return dao.updateContactDao(contact);
+	}
+
+	@Override
+	public List<contactEntity> getAllService() {
+		// TODO Auto-generated method stub
+		return dao.getAllDao();
 	}
 
 }
